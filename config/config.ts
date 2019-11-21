@@ -202,13 +202,13 @@ export default {
     basePath: '/',
   },
   chainWebpack: webpackPlugin,
-  /*
+  
   proxy: {
-    '/server/api/': {
-      target: 'https://preview.pro.ant.design/',
+    '/api/': {
+      target: 'http://127.0.0.1:3030',
       changeOrigin: true,
-      pathRewrite: { '^/server': '' },
+      pathRewrite: { '^/api': '' },
     },
   },
-  */
+ 
 } as IConfig;

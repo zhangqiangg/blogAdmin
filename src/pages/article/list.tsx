@@ -38,6 +38,10 @@ const data = [
   },
 ];
 class CreateArticle extends React.Component {
+  state = {
+
+  }
+
   render() {
     return (
       <Table

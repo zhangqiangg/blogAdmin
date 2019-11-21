@@ -17,6 +17,7 @@ import 'simplemde/dist/simplemde.min.css';
 import marked from 'marked';
 import highlight from 'highlight.js';
 import './style.less';
+import * as API from '../../services/api';
 
 const { Option } = Select;
 const AutoCompleteOption = AutoComplete.Option;
@@ -62,6 +63,11 @@ class CreateArticle extends React.Component {
       if (!err) {
         console.log('Received values of form: ', values);
       }
+      API.addArticle({
+        title: '111',
+        author: '222',
+        content: 'hdhadhsa',
+      });
     });
   };
 
