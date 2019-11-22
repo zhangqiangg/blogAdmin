@@ -17,6 +17,7 @@ import 'simplemde/dist/simplemde.min.css';
 import marked from 'marked';
 import highlight from 'highlight.js';
 import './style.less';
+import { connect } from 'dva';
 import * as API from '../../services/api';
 
 const { Option } = Select;
@@ -27,6 +28,9 @@ for (let i = 10; i < 36; i++) {
   children.push(<Option key={i.toString(36) + i}>{i.toString(36) + i}</Option>);
 }
 
+@connect(({ article }) => ({
+  article,
+}))
 class CreateArticle extends React.Component {
   state = {
     confirmDirty: false,
@@ -58,15 +62,20 @@ class CreateArticle extends React.Component {
   }
 
   handleSubmit = e => {
+    const { dispatch } = this.props;
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
-        console.log('Received values of form: ', values);
+        return console.log('Received values of form: ', values);
       }
-      API.addArticle({
+      const params = {
         title: '111',
         author: '222',
         content: 'hdhadhsa',
+      };
+      dispatch({
+        type: 'article/addArticle',
+        payload: params,
       });
     });
   };

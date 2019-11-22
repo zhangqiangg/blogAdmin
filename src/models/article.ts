@@ -1,6 +1,6 @@
 import { Reducer } from 'redux';
 import { Effect } from 'dva';
-import { stringify } from 'querystring';
+// import { stringify } from 'querystring';
 import * as API from '@/services/api';
 
 export interface StateType {
@@ -34,10 +34,42 @@ const Model: ArticleModelType = {
   },
   effects: {
     *addArticle({ payload }, { call, put }) {
-      // TODO
+      const response = yield call(API.addArticle, payload);
+      yield put({ type: 'save', payload: { response } });
+    },
+    *updateArticle({ payload }, { call, put }) {
+      const response = yield call(API.addArticle, payload);
+      yield put({ type: 'save', payload: { response } });
+    },
+    *getArticleList({ payload }, { call, put }) {
+      const response = yield call(API.addArticle, payload);
+      yield put({ type: 'save', payload: { response } });
+    },
+    *deleteArticle({ payload }, { call, put }) {
+      const response = yield call(API.addArticle, payload);
+      yield put({ type: 'save', payload: { response } });
     },
   },
-  reducers: {},
+  reducers: {
+    saveArticleList(state, { payload }) {
+      return {
+        ...state,
+        articleList: payload,
+      };
+    },
+    saveArticleListTotal(state, { payload }) {
+      return {
+        ...state,
+        articleList: payload,
+      };
+    },
+    saveArticlePageNum(state, { payload }) {
+      return {
+        ...state,
+        articleList: payload,
+      };
+    },
+  },
 };
 
 export default Model;
