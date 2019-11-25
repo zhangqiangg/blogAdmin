@@ -31,11 +31,30 @@ for (let i = 10; i < 36; i++) {
 @connect(({ article }) => ({
   article,
 }))
-class CreateArticle extends React.Component {
-  state = {
+interface StateType {
+  title: String;
+  author: String;
+  keyword: String;
+  describle: String;
+  cover_link: String;
+  // tags: String;
+  // categoey: String;
+  smde: any;
+  confirmDirty: boolean;
+  autoCompleteResult: any[];
+}
+class CreateArticle extends React.Component<StateType> {
+  state: StateType = {
     confirmDirty: false,
     autoCompleteResult: [],
     smde: null,
+    title: '',
+    author: '',
+    keyword: '',
+    describle: '',
+    cover_link: '',
+    // tags: '',
+    // category: '',
   };
 
   componentDidMount() {
@@ -65,13 +84,18 @@ class CreateArticle extends React.Component {
     const { dispatch } = this.props;
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
-      if (!err) {
-        return console.log('Received values of form: ', values);
-      }
+      // if (!err) {
+      //   return console.log('Received values of form: ', values);
+      // }
       const params = {
-        title: '111',
-        author: '222',
-        content: 'hdhadhsa',
+        title: this.state.title,
+        author: this.state.author,
+        keyword: this.state.keyword,
+        describle: this.state.describle,
+        cover_link: this.state.cover_link,
+        // tags: this.state.tags,
+        // category: this.state.category,
+        content: this.state.smde.value(),
       };
       dispatch({
         type: 'article/addArticle',
@@ -145,8 +169,9 @@ class CreateArticle extends React.Component {
 
     return (
       <Form {...formItemLayout} onSubmit={this.handleSubmit}>
-        <Form.Item label="标题">
+        {/* <Form.Item label="标题">
           {getFieldDecorator('title', {
+            initialValue: this.state.title,
             rules: [
               {
                 required: true,
@@ -157,6 +182,7 @@ class CreateArticle extends React.Component {
         </Form.Item>
         <Form.Item label="作者" required>
           {getFieldDecorator('author', {
+            initialValue: this.state.author,
             rules: [
               {
                 required: true,
@@ -164,16 +190,19 @@ class CreateArticle extends React.Component {
               },
             ],
           })(<Input />)}
-        </Form.Item>
-        <Form.Item label="关键字">{<Input />}</Form.Item>
-        <Form.Item label="描述">{<Input />}</Form.Item>
+        </Form.Item> */}
+        <Form.Item label="标题">{<Input name="title" value={this.state.title} />}</Form.Item>
+        <Form.Item label="作者">{<Input value={this.state.author} />}</Form.Item>
+
+        <Form.Item label="关键字">{<Input value={this.state.keyword} />}</Form.Item>
+        <Form.Item label="描述">{<Input value={this.state.describle} />}</Form.Item>
         <Form.Item label="封面链接">
           <AutoComplete
             dataSource={websiteOptions}
             onChange={this.handleWebsiteChange}
             placeholder="website"
           >
-            <Input />
+            <Input value={this.state.cover_link} />
           </AutoComplete>
         </Form.Item>
         <Form.Item label="文章设置">
